@@ -1,0 +1,1 @@
+docker run -d --name mysql -v /Users/niharpattanaik/SCS/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root123 -e MYSQL_DATABASE=salescrm -e MYSQL_USER=salescrm -e MYSQL_PASSWORD=salescrm123 -p 3306:3306 mysql

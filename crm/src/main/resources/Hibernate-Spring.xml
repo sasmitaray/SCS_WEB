@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd" >
+		
+		<context:component-scan base-package="com.sales.crm" />
+		
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+
+	
+	<!-- Hibernate 4 SessionFactory Bean definition -->
+	<bean id="hibernate4AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.sales.crm.model.Address</value>
+				<value>com.sales.crm.model.Customer</value>
+				<value>com.sales.crm.model.Reseller</value>
+				<value>com.sales.crm.model.Employee</value>
+				<value>com.sales.crm.model.Manufacturer</value>
+				<value>com.sales.crm.model.User</value>
+				<value>com.sales.crm.model.Role</value>
+				<value>com.sales.crm.model.Area</value>
+				<value>com.sales.crm.model.Beat</value>
+				<value>com.sales.crm.model.CustomerOTP</value>
+				<value>com.sales.crm.model.Order</value>
+				<value>com.sales.crm.model.SecurityQuestion</value>
+				<value>com.sales.crm.model.OrderBookingSchedule</value>
+				<value>com.sales.crm.model.ManufacturerSalesOfficer</value>
+				<value>com.sales.crm.model.ManufacturerAreaManager</value>
+				<value>com.sales.crm.model.Tenant</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="multipartResolver"   
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+	
+	<tx:annotation-driven/>
+
+</beans>
